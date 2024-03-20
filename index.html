@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda</title>
+</head>
+<body>
+    <h1>Tienda</h1>
+    <div id="productos"></div>
+
+    <script>
+        fetch('http://localhost:3000/productos')
+            .then(response => response.json())
+            .then(data => {
+                const productosDiv = document.getElementById('productos');
+                data.forEach(producto => {
+                    const productoDiv = document.createElement('div');
+                    productoDiv.innerHTML = `
+                        <h2>${producto.nombre}</h2>
+                        <p>${producto.descripcion}</p>
+                        <img src="${producto.img_product}" alt="${producto.nombre}">
+                        <p>Precio: $${producto.precio}</p>
+                    `;
+                    productosDiv.appendChild(productoDiv);
+                });
+            });
+    </script>
+</body>
+</html>
