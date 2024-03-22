@@ -19,7 +19,7 @@
                     productoDiv.innerHTML = `
                         <h2>${producto.nombre}</h2>
                         <p>${producto.descripcion}</p>
-                        <img src="${producto.img_product}" alt="${producto.nombre}">
+                        <img src="${producto.img_product}" alt="${producto.nombre}" loading="lazy">
                         <p>Precio: $${producto.precio}</p>
                     `;
                     productosDiv.appendChild(productoDiv);

@@ -1,28 +1,47 @@
 const express = require('express');
-const cors = require('cors'); // Importa el middleware CORS
+const cors = require('cors');
 const { createClient } = require('@supabase/supabase-js');
 const app = express();
 const port = 3000;
 
-// Configuración de CORS para permitir solicitudes desde cualquier origen
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Para manejar form-data
 
-const supabaseUrl = 'https://tixhydnqvkobvghzfdwv.supabase.co'; // Asegúrate de reemplazar con tu URL real
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpeGh5ZG5xdmtvYnZnaHpmZHd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA3NjkzMDMsImV4cCI6MjAyNjM0NTMwM30.xsq46fcTH9DWeUWjyTKrI0NR004gI7bULzfs9R-UoRQ'; // Asegúrate de reemplazar con tu clave real
+const supabaseUrl = 'https://tixhydnqvkobvghzfdwv.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpeGh5ZG5xdmtvYnZnaHpmZHd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA3NjkzMDMsImV4cCI6MjAyNjM0NTMwM30.xsq46fcTH9DWeUWjyTKrI0NR004gI7bULzfs9R-UoRQ';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-app.use(express.json());
-
-app.get('/', (req, res) => {
-    res.send('¡Bienvenido a mi ecommerce!');
+app.get('/supabase', (req, res) => {
+    res.json({
+        supabaseUrl: supabaseUrl,
+        supabaseKey: supabaseKey,
+    });
 });
 
+
+// Endpoint para agregar un producto
+app.post('/productos', async (req, res) => {
+    const { file, ...producto } = req.body;
+    const { data: url, error } = await supabase.storage.from('nombre_del_bucket').upload('ruta/en/el/bucket', file);
+    if (error) return res.status(500).send(error.message);
+
+    // Guardar el producto en la base de datos con la URL de la imagen
+    const { data: productoData, error: productoError } = await supabase
+        .from('productos')
+        .insert([{ ...producto, imagen_url: url.Key }]);
+
+    if (productoError) return res.status(500).send(productoError.message);
+    res.status(200).send(productoData);
+});
+
+// Endpoint para obtener todos los productos
 app.get('/productos', async (req, res) => {
     const { data, error } = await supabase
         .from('productos')
         .select('*');
     if (error) return res.status(500).send(error.message);
-    res.send(data);
+    res.status(200).send(data);
 });
 
 app.listen(port, () => {
