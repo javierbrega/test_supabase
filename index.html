@@ -30,10 +30,11 @@
                     const productoDiv = document.createElement('div');
                     productoDiv.classList.add('producto'); // Agrega la clase 'producto'
                     productoDiv.innerHTML = `
-                        <h2>${producto.nombre}</h2>                        
+                        <h2>${producto.nombre}</h2>  
                         <img src="${producto.img_product}" alt="${producto.nombre}" loading="lazy">
                         <p>${producto.descripcion}</p>
                         <p>Precio: $${producto.precio}</p>
+                        <h2>${producto.pagos}</h2>  
                     `;
                     // Agrega un evento de clic solo a la imagen del producto
                     const imgProducto = productoDiv.querySelector('img');

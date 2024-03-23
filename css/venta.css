@@ -1,0 +1,78 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+/* Estilo para el contenedor del producto */
+.product-container {
+    display: flex;
+    align-items: flex-start; /* Alinea los elementos verticalmente al inicio */
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    margin: 20px 0;
+    max-width: 1200px; /* Ajusta el ancho máximo según sea necesario */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Estilo para la imagen del producto */
+#imagenProducto {
+    border-radius: 50px;
+    width: 50%;
+    height: auto;
+    margin-right: 20px; /* Añade un margen a la derecha de la imagen */
+}
+
+/* Estilo para la información del producto */
+.product-info {
+    border-radius: 50px;
+    width: 50%; /* Ajusta el ancho según sea necesario */
+}
+/* Estilo para el encabezado y el pie de página dentro de .product-info */
+.product-info header,
+.product-info footer {
+    width: 100%;
+}
+
+/* Estilo para la descripción del producto */
+#descripcionProducto {
+    padding: 20px;
+    line-height: 1.6;
+}
+
+/* Estilo para los botones de acción */
+footer button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+footer button:hover {
+    background-color: #0056b3;
+}
+
+
+section {
+    width: 100%;
+    padding: 20px;
+    background-color: #9f9494;
+    margin: 20px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+

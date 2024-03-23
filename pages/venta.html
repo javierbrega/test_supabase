@@ -1,17 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venta de Producto</title>
+    <link rel="stylesheet" href="/css/venta.css">
 </head>
 <body>
-    <div id="detallesProducto">
+    <header>
+        <h1 id="nombreProducto"></h1>
+        
+        
+    </header>
+    <div class="product-container">
         <img id="imagenProducto" alt="Imagen del producto">
-        <h2 id="nombreProducto"></h2>
-        <p id="descripcionProducto"></p>
-        <p id="precioProducto"></p>
+        <div class="product-info">
+            <section>
+                <h2>Descripción</h2>
+                <p id="descripcionProducto"></p>
+                <p id="precioProducto"></p>
+                <p id="pagosProducto"></p>
+                <footer>
+                    <button>Comprar ahora</button>
+                    <button>Agregar al carrito</button>
+                </footer>
+            </section>
+        </div>
     </div>
+    
     
 
     <script>
@@ -27,8 +42,7 @@
                     // Muestra los detalles del producto seleccionado
                     document.getElementById('nombreProducto').textContent = producto.nombre;
                     document.getElementById('descripcionProducto').textContent = producto.descripcion;
-                    document.getElementById('precioProducto').textContent = `$${producto.precio}`;
-                    // Asegúrate de que 'imagen_url' coincida con la propiedad correcta en tu objeto de producto
+                    document.getElementById('precioProducto').textContent = `$${producto.precio}`;                    document.getElementById('pagosProducto').textContent = producto.pagos;
                     document.getElementById('imagenProducto').src = producto.img_product;
                 } else {
                     // Maneja el caso en que el producto no se encuentra
@@ -39,6 +53,5 @@
                 console.error('Error al obtener el producto:', error);
             });
     </script>
-    
 </body>
 </html>
