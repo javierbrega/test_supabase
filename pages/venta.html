@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venta de Producto</title>
+</head>
+<body>
+    <div id="detallesProducto">
+        <img id="imagenProducto" alt="Imagen del producto">
+        <h2 id="nombreProducto"></h2>
+        <p id="descripcionProducto"></p>
+        <p id="precioProducto"></p>
+    </div>
+    
+
+    <script>
+        // Obtén el ID del producto desde la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id');
+    
+        // Hacer una solicitud al servidor para obtener los detalles del producto
+        fetch(`http://localhost:3000/productos/${productId}`)
+            .then(response => response.json())
+            .then(producto => {
+                if (producto) {
+                    // Muestra los detalles del producto seleccionado
+                    document.getElementById('nombreProducto').textContent = producto.nombre;
+                    document.getElementById('descripcionProducto').textContent = producto.descripcion;
+                    document.getElementById('precioProducto').textContent = `$${producto.precio}`;
+                    // Asegúrate de que 'imagen_url' coincida con la propiedad correcta en tu objeto de producto
+                    document.getElementById('imagenProducto').src = producto.img_product;
+                } else {
+                    // Maneja el caso en que el producto no se encuentra
+                    console.error('Producto no encontrado');
+                }
+            })
+            .catch(error => {
+                console.error('Error al obtener el producto:', error);
+            });
+    </script>
+    
+</body>
+</html>

@@ -18,23 +18,6 @@ app.get('/supabase', (req, res) => {
         supabaseKey: supabaseKey,
     });
 });
-
-
-// Endpoint para agregar un producto
-app.post('/productos', async (req, res) => {
-    const { file, ...producto } = req.body;
-    const { data: url, error } = await supabase.storage.from('nombre_del_bucket').upload('ruta/en/el/bucket', file);
-    if (error) return res.status(500).send(error.message);
-
-    // Guardar el producto en la base de datos con la URL de la imagen
-    const { data: productoData, error: productoError } = await supabase
-        .from('productos')
-        .insert([{ ...producto, imagen_url: url.Key }]);
-
-    if (productoError) return res.status(500).send(productoError.message);
-    res.status(200).send(productoData);
-});
-
 // Endpoint para obtener todos los productos
 app.get('/productos', async (req, res) => {
     const { data, error } = await supabase
@@ -43,6 +26,21 @@ app.get('/productos', async (req, res) => {
     if (error) return res.status(500).send(error.message);
     res.status(200).send(data);
 });
+
+// Endpoint para obtener un producto por ID
+app.get('/productos/:id', async (req, res) => {
+    const productId = req.params.id;
+    const { data, error } = await supabase
+        .from('productos')
+        .select('*')
+        .eq('id', productId)
+        .single();
+
+    if (error) return res.status(500).send(error.message);
+    if (!data) return res.status(404).send('Producto no encontrado');
+    res.status(200).send(data);
+});
+
 
 app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);

@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Tienda</title>
 </head>
+
 <body>
-    <h1>Tienda</h1>
+
+    <div class="menu-container">
+        <ul class="menu">
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Nosotros</a></li>
+            <li><a href="#">Tienda</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+    </div>
+
     <div id="productos"></div>
 
     <script>
@@ -14,17 +26,31 @@
             .then(response => response.json())
             .then(data => {
                 const productosDiv = document.getElementById('productos');
-                data.forEach(producto => {
+                data.forEach((producto, index) => {
                     const productoDiv = document.createElement('div');
+                    productoDiv.classList.add('producto'); // Agrega la clase 'producto'
                     productoDiv.innerHTML = `
-                        <h2>${producto.nombre}</h2>
-                        <p>${producto.descripcion}</p>
+                        <h2>${producto.nombre}</h2>                        
                         <img src="${producto.img_product}" alt="${producto.nombre}" loading="lazy">
+                        <p>${producto.descripcion}</p>
                         <p>Precio: $${producto.precio}</p>
                     `;
+                    // Agrega un evento de clic solo a la imagen del producto
+                    const imgProducto = productoDiv.querySelector('img');
+                    imgProducto.addEventListener('click', function () {
+                        // Redirige al usuario a la página de venta, usando el ID del producto
+                        // Si no tienes un ID único, puedes usar el índice como un identificador temporal
+                        // Redirige al usuario a la página de venta, usando el ID del producto
+                        window.location.href = `pages/venta.html?id=${producto.id || index}`;
+
+                    });
                     productosDiv.appendChild(productoDiv);
                 });
             });
     </script>
+
+    >
+
 </body>
+
 </html>
