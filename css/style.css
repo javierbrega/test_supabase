@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -79,3 +84,47 @@ body {
     color: green;
 }
 
+.pie{
+    background: rgb(33, 37, 41);
+    width: 100%;
+    margin: 0;
+    color: #ccc;
+    text-align: center;
+
+    
+}
+img{
+ width: 30px; 
+}
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+span{
+    font-size: 23px;
+    font-weight: bold;
+}
+.header{
+    display: flex  ;
+    justify-content: space-between;
+    padding: 20px;
+    background: rgb(33, 37, 41);
+    align-items: center;
+}
+.section{
+    display: flex;
+    justify-content: space-evenly;
+    gap: 40px;
+}
+.section div{
+    width: 40%;
+    flex-direction: column;
+}
+a{
+    color: #ccc;  
+    text-decoration: none; 
+    padding: 5px; 
+    display: flex;
+    margin-bottom: 10px;
+}
