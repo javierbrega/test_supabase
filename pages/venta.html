@@ -46,7 +46,8 @@
                     // Muestra los detalles del producto seleccionado
                     document.getElementById('nombreProducto').textContent = producto.nombre;
                     document.getElementById('descripcionProducto').textContent = producto.descripcion;
-                    document.getElementById('precioProducto').textContent = `$${producto.precio}`;                    document.getElementById('pagosProducto').textContent = producto.pagos;
+                    document.getElementById('precioProducto').textContent = `$${producto.precio}`;    
+                    document.getElementById('pagosProducto').textContent = producto.pagos;
                     document.getElementById('imagenProducto').src = producto.img_product;
                 } else {
                     // Maneja el caso en que el producto no se encuentra
