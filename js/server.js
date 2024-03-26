@@ -1,45 +1,47 @@
-const express = require('express'); // Importa el módulo 'express' para crear el servidor web
-const cors = require('cors'); // Importa el módulo 'cors' para manejar las solicitudes de diferentes orígenes
-const { createClient } = require('@supabase/supabase-js'); // Importa la función 'createClient' del módulo '@supabase/supabase-js' para interactuar con Supabase
-const app = express(); // Crea una instancia de la aplicación express
-const port = 3000; // Define el puerto en el que se ejecutará el servidor
+const express = require('express');
+const cors = require('cors');
+const { createClient } = require('@supabase/supabase-js');
+const app = express();
+const port = 3000;
 
-app.use(cors()); // Usa el middleware 'cors' para permitir solicitudes de diferentes orígenes
-app.use(express.json()); // Usa el middleware de express para manejar el cuerpo de la solicitud en formato JSON
-app.use(express.urlencoded({ extended: true })); // Usa el middleware de express para manejar el cuerpo de la solicitud en formato urlencoded
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // Para manejar form-data
 
-const supabaseUrl = 'https://tixhydnqvkobvghzfdwv.supabase.co'; // URL de la base de datos de Supabase
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....'; // Clave de acceso a la base de datos de Supabase
-const supabase = createClient(supabaseUrl, supabaseKey); // Crea un cliente Supabase con la URL y la clave proporcionadas
+const supabaseUrl = 'https://tixhydnqvkobvghzfdwv.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpeGh5ZG5xdmtvYnZnaHpmZHd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA3NjkzMDMsImV4cCI6MjAyNjM0NTMwM30.xsq46fcTH9DWeUWjyTKrI0NR004gI7bULzfs9R-UoRQ';
+const supabase = createClient(supabaseUrl, supabaseKey);
 
-app.get('/supabase', (req, res) => { // Define un endpoint para devolver la URL y la clave de Supabase
+app.get('/supabase', (req, res) => {
     res.json({
         supabaseUrl: supabaseUrl,
         supabaseKey: supabaseKey,
     });
 });
-
-app.get('/productos', async (req, res) => { // Define un endpoint para obtener todos los productos
-    const { data, error } = await supabase // Realiza una consulta a Supabase para obtener todos los productos
+// Endpoint para obtener todos los productos
+app.get('/productos', async (req, res) => {
+    const { data, error } = await supabase
         .from('productos')
         .select('*');
-    if (error) return res.status(500).send(error.message); // Maneja errores de la consulta
-    res.status(200).send(data); // Devuelve los datos de los productos
+    if (error) return res.status(500).send(error.message);
+    res.status(200).send(data);
 });
 
-app.get('/productos/:id', async (req, res) => { // Define un endpoint para obtener un producto por su ID
-    const productId = req.params.id; // Obtiene el ID del producto de los parámetros de la solicitud
-    const { data, error } = await supabase // Realiza una consulta a Supabase para obtener el producto con el ID proporcionado
+// Endpoint para obtener un producto por ID
+app.get('/productos/:id', async (req, res) => {
+    const productId = req.params.id;
+    const { data, error } = await supabase
         .from('productos')
         .select('*')
         .eq('id', productId)
         .single();
 
-    if (error) return res.status(500).send(error.message); // Maneja errores de la consulta
-    if (!data) return res.status(404).send('Producto no encontrado'); // Si no se encuentra el producto, devuelve un mensaje de error
-    res.status(200).send(data); // Devuelve los datos del producto
+    if (error) return res.status(500).send(error.message);
+    if (!data) return res.status(404).send('Producto no encontrado');
+    res.status(200).send(data);
 });
 
-app.listen(port, () => { // Inicia el servidor y escucha en el puerto especificado
-    console.log(`Servidor corriendo en http://localhost:${port}`); // Imprime un mensaje en la consola indicando la URL del servidor
+
+app.listen(port, () => {
+    console.log(`Servidor corriendo en http://localhost:${port}`);
 });
